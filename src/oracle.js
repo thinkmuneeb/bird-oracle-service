@@ -1,34 +1,27 @@
-require("dotenv").config();
+require('dotenv').config();
 
-import request from "request-promise-native";
+import request from 'request-promise-native';
 
-import {
-  updateRequest,
-  newRequest
-} from "./ethereum";
+import { updateRequest, newRequest } from './ethereum';
 
 const start = () => {
-
   newRequest((error, result) => {
-    if (error ) {
+    if (error) {
       console.error(error);
       return;
     }
 
-    console.log("new request", result.returnValues);
+    console.log('new request', result.returnValues);
     let options = {
       uri: result.returnValues.url,
-      json: true
+      json: true,
     };
 
-    request(options)
-      .then(parseData(result))
-      .then(updateRequest)
-      .catch(error);    
+    request(options).then(parseData(result)).then(updateRequest).catch(error);
   });
 };
 
-const parseData = result => (body) => {
+const parseData = (result) => (body) => {
   return new Promise((resolve, reject) => {
     let id, valueRetrieved;
     try {
@@ -40,7 +33,7 @@ const parseData = result => (body) => {
     }
     resolve({
       id,
-      valueRetrieved
+      valueRetrieved,
     });
   });
 };

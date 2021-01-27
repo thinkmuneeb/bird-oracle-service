@@ -1,3 +1,3 @@
-import startOracle from "./oracle";
+import startOracle from './oracle';
 
 startOracle();
