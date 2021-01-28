@@ -11,7 +11,7 @@ const contract = new web3.eth.Contract(abi, address);
 const sendMethod = (privateKey, encodedABI) => {
   return new Promise((resolve, reject) => {
     const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-    console.log(account);
+    console.log('account', account);
     var tx = {
       from: account.address,
       to: address,
@@ -39,11 +39,21 @@ const sendMethod = (privateKey, encodedABI) => {
 
 export const updateRequest = ({ id, valueRetrieved }) => {
   return new Promise((resolve, reject) => {
-    const privateKey = variables.PRIVATE_KEYS[process.env.ACCOUNT];
-    var encodedABI = contract.methods
+    valueRetrieved = web3.utils.toWei(valueRetrieved);
+    console.log('req id:', id, ' got value:', valueRetrieved);
+    var privateKey;
+    var encodedABI;
+    privateKey = variables.PRIVATE_KEYS[process.env.ACCOUNT];
+    encodedABI = contract.methods
       .updatedChainRequest(id, valueRetrieved)
       .encodeABI();
     sendMethod(privateKey, encodedABI).then(resolve).catch(reject);
+
+    // privateKey = variables.PRIVATE_KEYS[1];
+    // encodedABI = contract.methods
+    //   .updatedChainRequest(id, valueRetrieved)
+    //   .encodeABI();
+    // sendMethod(privateKey, encodedABI).then(resolve).catch(reject);
   });
 };
 
