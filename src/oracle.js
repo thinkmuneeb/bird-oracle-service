@@ -1,10 +1,14 @@
 require('dotenv').config();
 
 import request from 'request-promise-native';
-
+import Web3 from 'web3';
 import { updateRequest, newRequest } from './ethereum';
 
 const start = () => {
+  const addr = Web3.utils.toChecksumAddress(
+    '0xcF01971DB0CAB2CBeE4A8C21bB7638aC1FA1c38C'
+  );
+  console.log('addr ', addr);
   newRequest((error, result) => {
     if (error) {
       console.error(error);
